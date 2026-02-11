@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Work_Flow.Infrastructure</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Work Flow.Application\Work Flow.Application.csproj" />
+    <ProjectReference Include="..\Work Flow.Domain\Work Flow.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
