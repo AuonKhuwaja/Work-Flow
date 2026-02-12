@@ -15,7 +15,7 @@ namespace Work_Flow.Infrastructure.Implementation.Services
         {
                 _userRepo = userRepo;
         }
-        public string GetUsersAsync()
+        public string GetUsers()
         {
             var users = _userRepo.GetUsers();
             return users;

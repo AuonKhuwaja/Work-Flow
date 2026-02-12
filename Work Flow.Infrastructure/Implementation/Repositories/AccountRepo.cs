@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Work_Flow.Application.Interfaces.Repositories;
-using Work_Flow.Domain.Domain;
 
 namespace Work_Flow.Infrastructure.Implementation.Repositories
 {
-    public interface IAccountRepo
+    public class AccountRepo : IAccountRepo
     {
-        Task<Users> LoginAccountAsync();
+        public string Login()
+        {
+            return "sucesssfull";
+        }
     }
-
 }
