@@ -8,9 +8,24 @@ using Work_Flow.Domain.Domain;
 
 namespace Work_Flow.Infrastructure.Implementation.Repositories
 {
-    public interface IAccountRepo
+    public class AccountRepo : IAccountRepo
     {
-        Task<Users> LoginAccountAsync();
+        public async Task<Users> LoginAccountAsync()
+        {
+            await Task.Delay(10);
+
+            var user = new Users
+            {
+                User_ID = 1,
+                username = "Auon Khuwaja",
+                Email = "aoun.khuwaja@hrsgonine.com",
+                PasswordHash = "1234",
+                Role = "Admin"
+            };
+
+            return user;
+        }
     }
+
 
 }

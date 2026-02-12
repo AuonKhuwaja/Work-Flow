@@ -9,7 +9,6 @@ namespace Work_Flow.Application.Interfaces.Repositories
 {
     public interface IAccountRepo
     {
-        public Users LoginAccount();
-
+        Task<Users> LoginAccountAsync();
     }
 }
