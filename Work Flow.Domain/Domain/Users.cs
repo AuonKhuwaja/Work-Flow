@@ -15,11 +15,7 @@ namespace Work_Flow.Domain.Domain
       
         public string Email { get; set; } = "";
         public string PasswordHash { get; set; } = "";
-        //public string PhoneNumber { get; set; } = "";
-        //public DateTime? CreatedAt { get; set; }
-        //public DateTime? UpdatedAt { get; set; }
-        //public bool? flgActive { get; set; }
-
-        //public bool? flgDelete { get; set; }
+        public string Role { get; set; } = "";
+       
     }
 }

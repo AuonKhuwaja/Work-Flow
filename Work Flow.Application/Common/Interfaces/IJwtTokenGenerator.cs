@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Work_Flow.Domain.Domain;
 
-namespace Work_Flow.Application.Interfaces.Repositories
+namespace Work_Flow.Application.Common.Interfaces
 {
-    public interface IAccountRepo
+    public interface IJwtTokenGenerator
     {
-        Task<Users> LoginAccountAsync();
+        string GenerateToken(Users user);
     }
 }

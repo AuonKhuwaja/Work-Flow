@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Work_Flow.Application.Interfaces.Repositories;
 using Work_Flow.Application.Interfaces.Services;
+using Work_Flow.Domain.Domain;
 
 namespace Work_Flow.Infrastructure.Implementation.Services
 {
@@ -14,17 +15,18 @@ namespace Work_Flow.Infrastructure.Implementation.Services
 
         public AccountService(  IAccountRepo accountRepo) {
             _accountRepo = accountRepo;
-        } 
+        }
 
-        public string Login()
+        public async Task<Users> LoginAsync()
         {
-            var login = _accountRepo.Login();
+            var login = await _accountRepo.LoginAccountAsync();
+
             if (login == null)
             {
-                return "login failed";
-
+                return null;
             }
-            else { return login; }  
+
+            return login;
         }
     }
 }
