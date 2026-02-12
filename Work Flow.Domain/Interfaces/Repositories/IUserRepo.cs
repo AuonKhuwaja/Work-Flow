@@ -8,6 +8,7 @@ namespace Work_Flow.Application.Interfaces.Repositories
 {
     public interface IUserRepo
     {
+        public string GetUsers();
 
     }
 }

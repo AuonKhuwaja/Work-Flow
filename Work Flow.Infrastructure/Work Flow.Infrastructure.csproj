@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.24" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Work Flow.Application\Work Flow.Application.csproj" />
     <ProjectReference Include="..\Work Flow.Domain\Work Flow.Domain.csproj" />
   </ItemGroup>

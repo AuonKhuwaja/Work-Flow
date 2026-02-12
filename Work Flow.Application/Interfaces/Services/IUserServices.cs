@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Work_Flow.Application.Interfaces.Services
 {
-    internal interface IUserServices
+    public interface IUserServices
     {
+        public string GetUsers();
     }
 }

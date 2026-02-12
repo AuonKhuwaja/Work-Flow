@@ -4,6 +4,8 @@ using Work_Flow.Application.Interfaces.Services;
 using Work_Flow.Infrastructure.Implementation.Repositories;
 using Work_Flow.Infrastructure.Implementation;
 using Work_Flow.Infrastructure.Implementation.Services;
+using Microsoft.EntityFrameworkCore;
+using Work_Flow.Infrastructure.Data;
 
 
 {
@@ -18,6 +20,10 @@ using Work_Flow.Infrastructure.Implementation.Services;
     builder.Services.AddSwaggerGen();
     builder.Services.AddScoped<IAccountService, AccountService>();
     builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+    builder.Services.AddScoped<IUserServices, UserServices>();
+    builder.Services.AddScoped<IUserRepo, UserRepo>();
+    builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
     var app = builder.Build();
 
 
