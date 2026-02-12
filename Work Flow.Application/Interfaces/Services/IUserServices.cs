@@ -8,6 +8,6 @@ namespace Work_Flow.Application.Interfaces.Services
 {
     public interface IUserServices
     {
-        public string GetUsers();
+        public string GetUsersAsync();
     }
 }

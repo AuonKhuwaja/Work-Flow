@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Work_Flow.Domain.Domain;
 
-namespace Work_Flow.Application.Interfaces.Services
+
+namespace Work_Flow.Application.Common.Interfaces
 {
-    public interface IAccountService
+    public interface IJwtTokenGenerator
     {
-        public Users LoginAsync();
+        string GenerateToken(Users user);
     }
 }

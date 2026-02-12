@@ -1,44 +1,71 @@
-using System.Security.Principal;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Work_Flow.Application.Common.Configurations;
+using Work_Flow.Application.Common.Interfaces;
 using Work_Flow.Application.Interfaces.Repositories;
 using Work_Flow.Application.Interfaces.Services;
-using Work_Flow.Infrastructure.Implementation.Repositories;
-using Work_Flow.Infrastructure.Implementation;
-using Work_Flow.Infrastructure.Implementation.Services;
-using Microsoft.EntityFrameworkCore;
 using Work_Flow.Infrastructure.Data;
+using Work_Flow.Infrastructure.Implementation;
+using Work_Flow.Infrastructure.Implementation.Repositories;
+using Work_Flow.Infrastructure.Implementation.Services;
+using Work_Flow.Infrastructure.Services;
 
+var builder = WebApplication.CreateBuilder(args);
 
-{
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-    var builder = WebApplication.CreateBuilder(args);
-
-    // Add services to the container.
-
-    builder.Services.AddControllers();
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-    builder.Services.AddScoped<IAccountService, AccountService>();
-    builder.Services.AddScoped<IAccountRepo, AccountRepo>();
-    builder.Services.AddScoped<IUserServices, UserServices>();
-    builder.Services.AddScoped<IUserRepo, UserRepo>();
-    builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-    var app = builder.Build();
 
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+builder.Services.AddScoped<IUserServices, UserServices>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
+builder.Services.Configure<JwtSettings>(
+    builder.Configuration.GetSection("JwtSettings"));
+
+builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+        ValidAudience = builder.Configuration["JwtSettings:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
+    };
+});
 
+builder.Services.AddAuthorization();
 
-    app.UseHttpsRedirection();
+var app = builder.Build();
 
-    app.UseAuthorization();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-    app.MapControllers();
+app.UseHttpsRedirection();
 
-    app.Run(); }
+app.UseAuthentication(); 
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

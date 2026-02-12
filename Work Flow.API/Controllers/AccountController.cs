@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Work_Flow.Application.Common.Interfaces;
 using Work_Flow.Application.Interfaces.Services;
 namespace Work_Flow.API.Controllers
 {
@@ -9,21 +9,28 @@ namespace Work_Flow.API.Controllers
     public class AccountController : ControllerBase
     {
         private IAccountService _accountService;
-        public AccountController(IAccountService accountService ) {
+        private IJwtTokenGenerator _jwtTokenGenerator;
+        public AccountController(IAccountService accountService, IJwtTokenGenerator jwtTokenGenerator ) {
         _accountService= accountService;    
+        _jwtTokenGenerator= jwtTokenGenerator;
         }
-
-        [HttpGet]
-        
+        [HttpPost("login")]
         public IActionResult Login()
         {
-            var result = _accountService.Login();
-            if(result == null)
-            {
-                return BadRequest();
-            }
-            return Ok(result);
+            var user = _accountService.LoginAsync();
 
+            if (user == null)
+                return Unauthorized("Invalid credentials");
+
+            var token = _jwtTokenGenerator.GenerateToken(user);
+
+            return Ok(new
+            {
+                token = token  
+            });
         }
+
+
+
     }
 }

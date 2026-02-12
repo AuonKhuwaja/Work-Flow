@@ -17,7 +17,7 @@ namespace Work_Flow.API.Controllers
         [HttpGet]
         public ActionResult GetAllUsers()
         {
-            var users = _userService.GetUsers();
+            var users = _userService.GetUsersAsync();
             return Ok(users);
         }
     }
