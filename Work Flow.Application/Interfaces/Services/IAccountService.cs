@@ -9,6 +9,7 @@ namespace Work_Flow.Application.Interfaces.Services
 {
     public interface IAccountService
     {
-        public Users LoginAsync();
+        Task<Users> LoginAsync();
     }
+
 }

@@ -17,17 +17,21 @@ namespace Work_Flow.Infrastructure.Implementation.Services
             _accountRepo = accountRepo;
         }
 
-        public Users LoginAsync()
+        public async Task<Users> LoginAsync()
         {
-            var login = _accountRepo.LoginAccount();
+            await Task.Delay(10);
 
-            if (login == null)
+            var user = new Users
             {
-                return null;   
-            }
+                User_ID = 1,
+                username = "Auon Khuwaja",
+                Email = "aoun.khuwaja@hrsgonine.com",
+                PasswordHash = "1234",
+                Role = "Admin"
+            };
 
-            return login;      
+            return user;
         }
-
+     
     }
 }

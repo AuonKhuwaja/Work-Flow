@@ -15,9 +15,9 @@ namespace Work_Flow.API.Controllers
         _jwtTokenGenerator= jwtTokenGenerator;
         }
         [HttpPost("login")]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
-            var user = _accountService.LoginAsync();
+            var user = await _accountService.LoginAsync(); 
 
             if (user == null)
                 return Unauthorized("Invalid credentials");
@@ -26,7 +26,7 @@ namespace Work_Flow.API.Controllers
 
             return Ok(new
             {
-                token = token  
+                token = token
             });
         }
 
