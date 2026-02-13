@@ -23,11 +23,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<IBoardService, BoardService>();
+builder.Services.AddScoped<IBoardMemberServices, BoardMemberServices>();
 #endregion
 #region DIRepository
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IBoardRepo, BoardRepo>();
+builder.Services.AddScoped<IBoardMembersRepo, BoardMembersRepo>();
 #endregion
 #region JWT Config
 builder.Services.Configure<JwtSettings>(
