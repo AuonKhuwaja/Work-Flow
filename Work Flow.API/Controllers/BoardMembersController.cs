@@ -16,7 +16,7 @@ namespace Work_Flow.API.Controllers
         }
 
         [HttpPost ("Create")]
-        public async Task<IActionResult> Create(BoardMembers data)
+        public async Task<IActionResult> Create(BoardMembers data) 
         {
            await _boardMemberServices.Insert(data);
             return Ok("Data Inserted!");

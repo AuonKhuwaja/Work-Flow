@@ -15,6 +15,7 @@ namespace Work_Flow.Infrastructure.Data
         public DbSet<Users> Users { get; set; }
         public DbSet<Boards> Boards { get; set; }
         public DbSet<BoardMembers> BoardMembers { get; set; }
+        public DbSet<Cards> Cards { get; set; }
         
     }
 }
