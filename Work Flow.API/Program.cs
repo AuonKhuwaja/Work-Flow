@@ -25,6 +25,8 @@ builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<IBoardService, BoardService>();
 builder.Services.AddScoped<IBoardMemberServices, BoardMemberServices>(); 
 builder.Services.AddScoped<ICardsService, CardsService>();
+builder.Services.AddScoped<IBoardMemberServices, BoardMemberServices>();
+builder.Services.AddScoped<IBoardListService, BoardListServices>();
 #endregion
 #region DIRepository
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
@@ -32,6 +34,7 @@ builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IBoardRepo, BoardRepo>();
 builder.Services.AddScoped<IBoardMembersRepo, BoardMembersRepo>();
 builder.Services.AddScoped<ICardsRepo, CardsRepo>();
+builder.Services.AddScoped<IBoardListRepo, BoardListRepo>();
 #endregion
 #region JWT Config
 builder.Services.Configure<JwtSettings>(
@@ -54,7 +57,7 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
         ValidAudience = builder.Configuration["JwtSettings:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(
+        IssuerSigningKey = new SymmetricSecurityKey(  
             Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
     };
 });
