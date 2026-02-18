@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Work_Flow.Domain.Domain;
 
 namespace Work_Flow.Infrastructure.Data
@@ -16,7 +11,17 @@ namespace Work_Flow.Infrastructure.Data
         public DbSet<Boards> Boards { get; set; }
         public DbSet<BoardMembers> BoardMembers { get; set; }
         public DbSet<Cards> Cards { get; set; }
-        public DbSet<BoardLists> BoardList { get; set; }
-        
+        public DbSet<BoardLists> BoardLists { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // BoardMembers is a join entity in DB: define a composite PK (BoardId, UserId)
+            modelBuilder.Entity<BoardMembers>()
+                .HasKey(bm => new { bm.BoardId, bm.UserId });
+
+            // Let EF conventions map BoardLists -> BoardLists table and Order -> Order column.
+            // If you prefer explicit relational mapping, add Microsoft.EntityFrameworkCore.SqlServer package.
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

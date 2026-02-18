@@ -31,7 +31,7 @@ namespace Work_Flow.Infrastructure.Implementation.Repositories
 
         public async Task DeleteBoardlistAsync(int id)
         {
-            var data = await _dbContext.BoardList.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var data = await _dbContext.BoardLists.Where(x => x.Id == id).FirstOrDefaultAsync();
             data.IsActive = false;
             data.IsDeleted = true;
             data.UpdatedAt = DateTime.UtcNow;
@@ -39,13 +39,23 @@ namespace Work_Flow.Infrastructure.Implementation.Repositories
         }
         public async Task<List<BoardLists>> GetBoardlistAsync(int boardid)
         {
-            return await _dbContext.BoardList.Where(x => x.BoardId == boardid
+            return await _dbContext.BoardLists.Where(x => x.BoardId == boardid
                        && x.IsActive.Equals(true)
                        && x.IsDeleted.Equals(false)).ToListAsync();
         }
         public async Task UpdateBoardlistAsync(int id, string name, int order)
         {
-             var data = await _dbContext.BoardList.Where(x => x.Id == id).FirstOrDefaultAsync();
+             var data = await _dbContext.BoardLists.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            if (data != null)
+            {
+                
+                data.Name = name;
+                data.Order = order;
+
+            }
+            _dbContext.BoardLists.Update(data);
+            _dbContext.SaveChanges();
 
         }
     }

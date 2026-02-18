@@ -31,7 +31,9 @@ namespace Work_Flow.Infrastructure.Implementation.Repositories
                 Description = card.Description,
                 ListId = card.ListId,
                 Position = maxPosition + 1,
-                CreatedAt = DateTime.UtcNow
+                DueDate=card.DueDate,
+                CreatedAt = DateTime.UtcNow,
+                IsActive =true
             };
             _dBContext.Cards.Add(newcard);  
             _dBContext.SaveChanges();
