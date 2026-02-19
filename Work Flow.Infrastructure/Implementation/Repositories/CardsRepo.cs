@@ -83,5 +83,60 @@ namespace Work_Flow.Infrastructure.Implementation.Repositories
                 .OrderBy(x => x.Position)
                 .ToListAsync();
         }
+        public async Task MoveCardAsync(MoveCardDto dto)
+        {
+            var card = await _dBContext.Cards
+                .FirstOrDefaultAsync(x => x.Id == dto.CardId);
+
+            if (card == null)
+                throw new Exception("Card not found");
+
+            var oldListId = card.ListId;
+            var oldPosition = card.Position;
+
+          
+            if (oldListId == dto.TargetListId)
+            {
+                if (dto.TargetPosition < oldPosition)
+                {
+                    await _dBContext.Cards
+                        .Where(x => x.ListId == oldListId &&
+                                    x.Position >= dto.TargetPosition &&
+                                    x.Position < oldPosition)
+                        .ForEachAsync(x => x.Position++);
+                }
+                else
+                {
+                    await _dBContext.Cards
+                        .Where(x => x.ListId == oldListId &&
+                                    x.Position <= dto.TargetPosition &&
+                                    x.Position > oldPosition)
+                        .ForEachAsync(x => x.Position--);
+                }
+
+                card.Position = dto.TargetPosition;
+            }
+
+            else
+            {
+           
+                await _dBContext.Cards
+                    .Where(x => x.ListId == oldListId &&
+                                x.Position > oldPosition)
+                    .ForEachAsync(x => x.Position--);
+
+          
+                await _dBContext.Cards
+                    .Where(x => x.ListId == dto.TargetListId &&
+                                x.Position >= dto.TargetPosition)
+                    .ForEachAsync(x => x.Position++);
+
+                card.ListId = dto.TargetListId;
+                card.Position = dto.TargetPosition;
+            }
+
+            await _dBContext.SaveChangesAsync();
+        }
+
     }
 }

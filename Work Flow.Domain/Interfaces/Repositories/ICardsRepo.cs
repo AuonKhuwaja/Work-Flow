@@ -14,5 +14,6 @@ namespace Work_Flow.Domain.Interfaces.Repositories
         Task RemoveCard(int cardId);
         Task<Cards> UpdateCard(int cardId, Cards updatedCard);
         Task<List<Cards>> GetCardsByListId(int listId);
+        Task MoveCardAsync(MoveCardDto dto);
     }
 }

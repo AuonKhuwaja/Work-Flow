@@ -39,7 +39,6 @@ namespace Work_Flow.API.Controllers
             return NotFound();
         }
 
-        // Update (full)
         [HttpPut("{id}")]
         public async Task<IActionResult> EditCard(int id, [FromBody] Cards updatedModel)
         {
@@ -52,14 +51,19 @@ namespace Work_Flow.API.Controllers
             return BadRequest();
         }
 
-       
-     
-        // Delete
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCard(int id)
         {
             await _cardsService.DeleteCard(id);
             return NoContent();
         }
+        [HttpPost("move")]
+        public async Task<IActionResult> MoveCard(MoveCardDto dto)
+        {
+            await _cardsService.MoveCard(dto);
+            return Ok("Card moved successfully");
+        }
+
+
     }
 }

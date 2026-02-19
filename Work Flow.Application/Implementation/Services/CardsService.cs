@@ -35,5 +35,10 @@ namespace Work_Flow.Application.Implementation.Services
         {   
            return await _cardsRepo.GetCardsByListId(listId);
         }
+
+        public async Task MoveCard(MoveCardDto dto)
+        {
+             await _cardsRepo.MoveCardAsync(dto);
+        }
     }
 }

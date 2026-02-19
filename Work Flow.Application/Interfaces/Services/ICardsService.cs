@@ -11,5 +11,6 @@ namespace Work_Flow.Application.Interfaces.Services
         Task DeleteCard(int cardId);
         Task<Cards> EditCard(int cardId, Cards updatedCard);
         Task<List<Cards>> GetCardsByListId(int listId);
+        Task MoveCard(MoveCardDto dto);
     }
 }
